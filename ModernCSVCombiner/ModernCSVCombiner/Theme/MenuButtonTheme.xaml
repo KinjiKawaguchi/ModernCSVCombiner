@@ -9,13 +9,12 @@
                     <ControlTemplate>
                         <Grid VerticalAlignment="Stretch"
                               HorizontalAlignment="Stretch"
-                              Background="{TemplateBinding Backgroud}">
+                              Background="{TemplateBinding Background}">
                             <TextBlock Text="Hello"
                                        VerticalAlignment="Center"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
-
             </Setter>
 
             <Setter Property="Background" Value="Transparent"/>
@@ -24,7 +23,7 @@
 
         <Style.Triggers>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="#22202f"
+                <Setter Property="Background" Value="#22202f"/>
             </Trigger>
         </Style.Triggers>
 
