@@ -11,5 +11,6 @@ namespace ModernCSVCombiner
         {
             InitializeComponent();
         }
+
     }
 }

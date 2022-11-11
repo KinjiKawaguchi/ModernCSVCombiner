@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:viewModel="clr-namespace:ModernCSVCombiner.MVVM.ViewModel"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="920"
@@ -10,6 +11,9 @@
         ResizeMode="NoResize"
         Background="Transparent"
         AllowsTransparency="True">
+    <Window.DataContext>
+        <viewModel:MainViewModel/>
+    </Window.DataContext>
     <Border Background="#272537"
             CornerRadius="20">
         <Grid>
@@ -22,9 +26,8 @@
                 <RowDefinition Height="75"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
-            <materialDesign:PackIcon
-                                     Kind="FileReplace"
+
+            <materialDesign:PackIcon Kind="FileReplace"
                                      VerticalAlignment="Center"
                                      Margin="16,0,0,0"
                                      Height="22" Width="22" BorderBrush="Black" Background="#FF85A467"/>
@@ -34,10 +37,23 @@
                    Foreground="White"
                    FontSize="22"
                    Margin="20,0,0,0"/>
+            <StackPanel Grid.Row="1">
+                <RadioButton Content="InputFiles"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"/>
+                <RadioButton Content="Dictionary"
+                             Height="50"
+                             Foreground="White"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}"/>
+            </StackPanel>
+
+            <ContentControl Grid.Row="1"
+                            Grid.Column="1"
+                            Margin="10"
+                            Content="{Binding CurrentView}"/>
         </Grid>
-
-
     </Border>
 </Window>
-    
-    
