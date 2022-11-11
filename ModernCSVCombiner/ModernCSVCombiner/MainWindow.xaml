@@ -43,7 +43,7 @@
                              Foreground="White"
                              FontSize="14"
                              Style="{StaticResource MenuButtonTheme}"/>
-                <RadioButton Content="Dictionary"
+                <RadioButton Content="Dictionary(Unavailable)"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
