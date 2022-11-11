@@ -34,25 +34,6 @@
                    Foreground="White"
                    FontSize="22"
                    Margin="20,0,0,0"/>
-
-            <StackPanel Grid.Row="1">
-
-                <RadioButton Content="InoputFiles"
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
-                <RadioButton Content="Execute"
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
-                <RadioButton Content="Dictionary"
-                             Height="50"
-                             Foreground="White"
-                             FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
-            </StackPanel>
         </Grid>
 
 
