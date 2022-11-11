@@ -6,12 +6,14 @@
         <Style.Setters>
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate>
+                    <ControlTemplate TargetType="RadioButton">
                         <Grid VerticalAlignment="Stretch"
                               HorizontalAlignment="Stretch"
                               Background="{TemplateBinding Background}">
-                            <TextBlock Text="Hello"
-                                       VerticalAlignment="Center"/>
+                            <TextBlock Text="{TemplateBinding Property=Content}"
+                                       VerticalAlignment="Center"
+                                       HorizontalAlignment="Left"
+                                       Margin="40,0,0,0"/>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
