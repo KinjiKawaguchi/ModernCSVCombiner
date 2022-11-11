@@ -3,88 +3,233 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:local="clr-namespace:ModernCSVCombiner.MVVM.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
     <StackPanel>
         <TextBlock Text="InputFiles"
                    Foreground="White"
                    FontSize="28"
                    HorizontalAlignment="Left"
                    Margin="0,0,0,20"/>
+        
+        
+        
         <StackPanel Orientation="Horizontal">
-            <Border Width="315"
-                    Height="200">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                        <GradientStop Color="#5bc3ff" Offset="0.0"/>
-                        <GradientStop Color="Red" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-
-                <Border.Clip>
+            <materialDesign:Flipper IsFlippedChanged="Flipper_OnIsFlippedChanged"
+                                    Style="{StaticResource MaterialDesignCardFlipper}">
+                <materialDesign:Flipper.Clip>
                     <RectangleGeometry RadiusX="10"
                                        RadiusY="10"
                                        Rect="0,0,315,200"/>
-                </Border.Clip>
+                </materialDesign:Flipper.Clip>
 
-                <Grid>
-                    <StackPanel>
-                        <TextBlock Text="Drag and Drop&#x0a;CSV File Here❢"
-                                   Foreground="White"
-                                   FontSize="28"
-                                   Margin="20,10,10,0"/>
-                    </StackPanel>
 
-                    <Image Source="/Images/CSVIcon.png" 
-                           Margin="-22,51,228,-62" RenderTransformOrigin="0.5,0.5">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="34.837"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
+                <materialDesign:Flipper.FrontContent>
+                <Border Width="315"
+                        Height="200"
+                        Margin="0,0,0,0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                            <GradientStop Color="#5bc3ff" Offset="0.0"/>
+                                <GradientStop Color="Red" Offset="1"/>
+                            </LinearGradientBrush>
+                    </Border.Background>
 
-                </Grid>
-            </Border>
-            <Border Width="315"
-                    Height="200" Margin="20,0,0,0">
-                <Border.Background>
-                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
-                        <GradientStop Color="#FFFF5B5B" Offset="0.0"/>
-                        <GradientStop Color="#3aa0ff" Offset="1"/>
-                    </LinearGradientBrush>
-                </Border.Background>
-                <Border.Clip>
+                    <Border.Clip>
+                        <RectangleGeometry RadiusX="10"
+                                           RadiusY="10"
+                                           Rect="0,0,315,200"/>
+                    </Border.Clip>
+
+                        <Grid>
+                            <StackPanel>
+                                <TextBlock Text="Drag and Drop&#x0a;CSV File Here❢"
+                                        Foreground="White"
+                                        FontSize="28"
+                                        Margin="20,10,10,0"/>
+                            </StackPanel>
+
+                            <Image Source="/Images/CSVIcon.png" 
+                                Margin="-22,51,228,-62" RenderTransformOrigin="0.5,0.5">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="34.837"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <Button Width="150"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                Content="FIRST FILE INFO"
+                                Style="{StaticResource MaterialDesignFlatButton}" />
+
+                        </Grid>
+                    </Border>
+                </materialDesign:Flipper.FrontContent>
+                
+                <materialDesign:Flipper.BackContent>
+                    <Grid Width="315"
+                          Height="200">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Padding="6"
+                                                  Mode="SecondaryMid">
+                            <StackPanel Orientation="Horizontal">
+                                <Button HorizontalAlignment="Left"
+                                        Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                        Style="{StaticResource MaterialDesignToolForegroundButton}">
+                                    <materialDesign:PackIcon HorizontalAlignment="Right"
+                                                             Kind="ArrowLeft" />
+                                </Button>
+                                <TextBlock Margin="8,0,0,0"
+                                           VerticalAlignment="Center"
+                                           Text="FIRST FILE INFO" />
+                            </StackPanel>
+                        </materialDesign:ColorZone>
+                        <Grid Grid.Row="1"
+                              Width="300"
+                              Margin="0,6,0,0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBox Margin="0,0,0,0"
+                                     materialDesign:HintAssist.Hint="File Name"
+                                     materialDesign:HintAssist.IsFloating="True"
+                                     Text="None" />
+                            <TextBox Grid.Row="1"
+                                     Margin="0,0,0,0"
+                                     materialDesign:HintAssist.Hint="File Path"
+                                     materialDesign:HintAssist.IsFloating="True"
+                                     Text="None" />
+                        </Grid>
+                    </Grid>
+                </materialDesign:Flipper.BackContent>
+            </materialDesign:Flipper>
+
+            
+            
+            
+            
+            
+            
+
+
+            <materialDesign:Flipper IsFlippedChanged="Flipper_OnIsFlippedChanged"
+                                    Style="{StaticResource MaterialDesignCardFlipper}"
+                                    HorizontalAlignment="Center"
+                                    Margin="15,0,0,0">
+                <materialDesign:Flipper.Clip>
                     <RectangleGeometry RadiusX="10"
                                        RadiusY="10"
                                        Rect="0,0,315,200"/>
-                </Border.Clip>
+                </materialDesign:Flipper.Clip>
 
-                <Grid>
-                    <StackPanel>
-                        <TextBlock Text="Drag and Drop&#x0a;CSV File Here❢"
-                                   Foreground="White"
-                                   FontSize="28"
-                                   Margin="20,10,10,0"/>
-                    </StackPanel>
+                <materialDesign:Flipper.FrontContent>
+                    <Border Width="315"
+                        Height="200" Margin="0,0,0,0">
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,2">
+                                <GradientStop Color="#FFFF5B5B" Offset="0.0"/>
+                                <GradientStop Color="#3aa0ff" Offset="1"/>
+                            </LinearGradientBrush>
+                        </Border.Background>
+                        <Border.Clip>
+                            <RectangleGeometry RadiusX="10"
+                                           RadiusY="10"
+                                           Rect="0,0,315,200"/>
+                        </Border.Clip>
 
-                    <Image Source="/Images/CSVIcon.png" 
-                           Margin="-20,51,226,-62" RenderTransformOrigin="0.5,0.5">
-                        <Image.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="32.463"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Image.RenderTransform>
-                    </Image>
-                </Grid>
-            </Border>
+                        <Grid>
+                            <StackPanel>
+                                <TextBlock Text="Drag and Drop&#x0a;CSV File Here❢"
+                                       Foreground="White"
+                                       FontSize="28"
+                                       Margin="20,10,10,0"/>
+                            </StackPanel>
+
+                            <Image Source="/Images/CSVIcon.png" 
+                               Margin="-20,51,226,-62" RenderTransformOrigin="0.5,0.5">
+                                <Image.RenderTransform>
+                                    <TransformGroup>
+                                        <ScaleTransform/>
+                                        <SkewTransform/>
+                                        <RotateTransform Angle="32.463"/>
+                                        <TranslateTransform/>
+                                    </TransformGroup>
+                                </Image.RenderTransform>
+                            </Image>
+                            <Button Width="150"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                Content="SCOND FILE INFO"
+                                Style="{StaticResource MaterialDesignFlatButton}" />
+                        </Grid>
+                    </Border>
+                </materialDesign:Flipper.FrontContent>
+                
+                <materialDesign:Flipper.BackContent>
+                    <Grid Width="315"
+                          Height="200">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+                        <materialDesign:ColorZone Padding="6"
+                                                  Mode="SecondaryMid">
+                            <StackPanel Orientation="Horizontal">
+                            <Button Width="150"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Command="{x:Static materialDesign:Flipper.FlipCommand}"
+                                Content="SECOND FILE INFO"
+                                Style="{StaticResource MaterialDesignFlatButton}" />
+                            </StackPanel>
+                        </materialDesign:ColorZone>
+                        <Grid Grid.Row="1"
+                              Width="300"
+                              Margin="0,6,0,0"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Top">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <TextBox Margin="0,0,0,0"
+                                     materialDesign:HintAssist.Hint="File Name"
+                                     materialDesign:HintAssist.IsFloating="True"
+                                     Text="None" />
+                            <TextBox Grid.Row="1"
+                                     Margin="0,0,0,0"
+                                     materialDesign:HintAssist.Hint="File Path"
+                                     materialDesign:HintAssist.IsFloating="True"
+                                     Text="None" />
+                        </Grid>
+                    </Grid>
+                </materialDesign:Flipper.BackContent>
+            </materialDesign:Flipper>
         </StackPanel>
 
         <StackPanel>

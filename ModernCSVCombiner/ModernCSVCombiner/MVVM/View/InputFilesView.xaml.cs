@@ -24,5 +24,8 @@ namespace ModernCSVCombiner.MVVM.View
         {
             InitializeComponent();
         }
+
+        private void Flipper_OnIsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
+    => System.Diagnostics.Debug.WriteLine($"Card is flipped = {e.NewValue}");
     }
 }
