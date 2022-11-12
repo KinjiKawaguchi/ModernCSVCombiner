@@ -45,6 +45,9 @@ namespace ModernCSVCombiner.MVVM.View
             public static List<string[]> CountryData = new List<string[]>();
             public static int FirstRC;
             public static int SecondRC;
+            public static string OutputFileName = null;
+            public static string FirstFileName;
+            public static string SecondFileName;
         }
 
         public static class Constans
@@ -92,13 +95,15 @@ namespace ModernCSVCombiner.MVVM.View
                     if (ConfirmFileRightness(path))
                     {
                         String[] SplitFilePath = path.Split('\\');
+                        String FileName = SplitFilePath[SplitFilePath.Length - 1];
                         if (control.Name == "FirstFileDrop")
                         {
                             Global.first_file_path = path;
                             Global.first_file_exists_is = true;
                             TextBox_First_FilePath.Text = path;
                             Button_FirstFlipper.Visibility = Visibility.Visible;
-                            TextBox_FirstFileName.Text = SplitFilePath[SplitFilePath.Length - 1];
+                            TextBox_FirstFileName.Text = FileName;
+                            Global.FirstFileName = FileName;
                         }
                         else if (control.Name == "SecondFileDrop")
                         {
@@ -106,7 +111,8 @@ namespace ModernCSVCombiner.MVVM.View
                             Global.second_file_exists_is = true;
                             TextBox_SecondFilePath.Text = path;
                             Button_SecondFlipper.Visibility = Visibility.Visible;
-                            TextBox_SecondFileName.Text = SplitFilePath[SplitFilePath.Length - 1];
+                            TextBox_SecondFileName.Text = FileName;
+                            Global.SecondFileName = FileName;
                         }
                         /*
                         if (Global.first_file_exists_is && Global.second_file_exists_is)
@@ -308,7 +314,11 @@ namespace ModernCSVCombiner.MVVM.View
 
         private static void Export(List<string> insert_list)
         {
-            using FileStream fs = File.Create("./output.csv");
+            if (Global.OutputFileName == null)
+            {
+                Global.OutputFileName = "Combined "+  Global.FirstFileName + " and " + Global.SecondFileName;
+            }
+            using FileStream fs = File.Create("Combined " + Global.FirstFileName + " and " + Global.SecondFileName + ".csv");
             using StreamWriter sw = new StreamWriter(fs);
             foreach (var line in insert_list)
             {
@@ -407,6 +417,10 @@ namespace ModernCSVCombiner.MVVM.View
         private void Flipper_OnIsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
     => System.Diagnostics.Debug.WriteLine($"Card is flipped = {e.NewValue}");
 
+        private void TextBox_OutputName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Global.OutputFileName = TextBox_OutputName.Text;
+        }
     }
 }
 
