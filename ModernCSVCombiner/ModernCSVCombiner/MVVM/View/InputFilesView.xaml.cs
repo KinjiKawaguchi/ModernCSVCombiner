@@ -27,6 +27,9 @@ namespace ModernCSVCombiner.MVVM.View
         {
             InitializeComponent();
 
+            Button_FirstFlipper.Visibility = Visibility.Collapsed;
+            Button_SecondFlipper.Visibility = Visibility.Collapsed;
+
             GetCountryData();
 
             EnableDragDrop(FirstFileDrop);
@@ -40,6 +43,8 @@ namespace ModernCSVCombiner.MVVM.View
             public static bool first_file_exists_is = false;
             public static bool second_file_exists_is = false;
             public static List<string[]> CountryData = new List<string[]>();
+            public static int FirstRC;
+            public static int SecondRC;
         }
 
         public static class Constans
@@ -86,18 +91,22 @@ namespace ModernCSVCombiner.MVVM.View
 
                     if (ConfirmFileRightness(path))
                     {
+                        String[] SplitFilePath = path.Split('\\');
                         if (control.Name == "FirstFileDrop")
                         {
                             Global.first_file_path = path;
                             Global.first_file_exists_is = true;
                             TextBox_First_FilePath.Text = path;
-
+                            Button_FirstFlipper.Visibility = Visibility.Visible;
+                            TextBox_FirstFileName.Text = SplitFilePath[SplitFilePath.Length - 1];
                         }
                         else if (control.Name == "SecondFileDrop")
                         {
                             Global.second_file_path = path;
                             Global.second_file_exists_is = true;
                             TextBox_SecondFilePath.Text = path;
+                            Button_SecondFlipper.Visibility = Visibility.Visible;
+                            TextBox_SecondFileName.Text = SplitFilePath[SplitFilePath.Length - 1];
                         }
                         /*
                         if (Global.first_file_exists_is && Global.second_file_exists_is)
@@ -131,45 +140,51 @@ namespace ModernCSVCombiner.MVVM.View
             return true;
         }
 
-        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)////数字のみ入力されるように(全角には非対応)
+        private void First_TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)////数字のみ入力されるように(全角には非対応)
         {
+            var tmp = "";
             bool yes_parse;
             {
                 // 既存のテキストボックス文字列に、
                 // 今新規に一文字追加された時、その文字列が
                 // 数値として意味があるかどうかをチェック
                 {
-                    var tmp = FirstFileReferenceColumn.Text + e.Text;
+                    tmp = FirstFileReferenceColumn.Text + e.Text;
                     yes_parse = Single.TryParse(tmp, out _);
                 }
             }
             // 更新したい場合は false, 更新したくない場合は true
             // を返すべし。（混乱しやすいので注意！）
+            int.TryParse(tmp, out int result);
+            Global.FirstRC = result;
+            e.Handled = !yes_parse;
+        }
+        private void Second_TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)////数字のみ入力されるように(全角には非対応)
+        {
+            var tmp = "";
+            bool yes_parse;
+            {
+                // 既存のテキストボックス文字列に、
+                // 今新規に一文字追加された時、その文字列が
+                // 数値として意味があるかどうかをチェック
+                {
+                    tmp = SecondFileReferenceColumn.Text + e.Text;
+                    yes_parse = Single.TryParse(tmp, out _);
+                }
+            }
+            // 更新したい場合は false, 更新したくない場合は true
+            // を返すべし。（混乱しやすいので注意！）
+            int.TryParse(tmp, out int result);
+            Global.SecondRC = result;
             e.Handled = !yes_parse;
         }
 
         private void Button_Comb_Click(object sender, RoutedEventArgs e)
         {
             //ユーザが指定した列をint型で取得
-            int first_specified_column;
-            int second_specified_column;
 
-            if (FirstFileReferenceColumn.Text == null)
-            {
-                first_specified_column = 1;
-            }
-            else
-            {
-                first_specified_column = int.Parse(FirstFileReferenceColumn.Text);
-            }
-            if (SecondFileReferenceColumn.Text == null)
-            {
-                second_specified_column = 1;
-            }
-            else
-            {
-                second_specified_column = int.Parse(SecondFileReferenceColumn.Text);
-            }
+            int first_specified_column = Global.FirstRC;
+            int second_specified_column = Global.SecondRC;
 
 
             ///指定された２つのCSVのを二次元配列に格納
@@ -293,8 +308,8 @@ namespace ModernCSVCombiner.MVVM.View
 
         private static void Export(List<string> insert_list)
         {
-            File.Create("./output.csv");
-            using StreamWriter sw = new StreamWriter("./output.csv", false, Encoding.GetEncoding("Shift-JIS"));
+            using FileStream fs = File.Create("./output.csv");
+            using StreamWriter sw = new StreamWriter(fs);
             foreach (var line in insert_list)
             {
                 sw.WriteLine(line);
@@ -391,6 +406,7 @@ namespace ModernCSVCombiner.MVVM.View
         }
         private void Flipper_OnIsFlippedChanged(object sender, RoutedPropertyChangedEventArgs<bool> e)
     => System.Diagnostics.Debug.WriteLine($"Card is flipped = {e.NewValue}");
+
     }
 }
 
