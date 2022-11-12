@@ -12,5 +12,9 @@ namespace ModernCSVCombiner
             InitializeComponent();
         }
 
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
 }

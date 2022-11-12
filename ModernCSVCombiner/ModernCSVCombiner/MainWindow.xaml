@@ -42,12 +42,20 @@
                              Height="50"
                              Foreground="White"
                              FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             IsChecked="True"
+                             Command="{Binding InputFilesViewCommand}"/>
                 <RadioButton Content="Dictionary(Unavailable)"
                              Height="50"
                              Foreground="White"
                              FontSize="14"
-                             Style="{StaticResource MenuButtonTheme}"/>
+                             Style="{StaticResource MenuButtonTheme}"
+                             Command="{Binding DictionaryViewCommand}"/>
+                <RadioButton Content="Exit"
+                             Height="50"
+                             Foreground="Red"
+                             FontSize="14"
+                             Style="{StaticResource MenuButtonTheme}" Checked="RadioButton_Checked"/>
             </StackPanel>
 
             <ContentControl Grid.Row="1"

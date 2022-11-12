@@ -23,6 +23,12 @@
             <DataTemplate DataType="{x:Type viewModel:InputFilesViewModel}">
                 <view:InputFilesView/>
             </DataTemplate>
+
+
+            <DataTemplate DataType="{x:Type viewModel:DictionaryViewModel}">
+                <view:DictionaryView/>
+            </DataTemplate>
+            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

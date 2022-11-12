@@ -10,7 +10,13 @@ namespace ModernCSVCombiner.MVVM.ViewModel
     class MainViewModel : ObservableObject
     {
 
+        public RelayCommand InputFilesViewCommand { get; set; }
+        
+        public RelayCommand DictionaryViewCommand { get; set; }
+
         public InputFilesViewModel InputVM { get; set; }
+
+        public DictionaryViewModel DictionaryVM { get; set; }
 
         private object _currentView;
 
@@ -26,7 +32,19 @@ namespace ModernCSVCombiner.MVVM.ViewModel
         public MainViewModel()
         {
             InputVM = new InputFilesViewModel();
+            DictionaryVM = new DictionaryViewModel();
+
             CurrentView = InputVM;
+
+            InputFilesViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = InputVM;
+            }); 
+
+            DictionaryViewCommand = new RelayCommand(o =>
+            {
+                CurrentView = DictionaryVM;
+            });
         }
     }
 }
