@@ -1,18 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.IO;
 
 
 namespace ModernCSVCombiner.MVVM.View
@@ -42,7 +36,7 @@ namespace ModernCSVCombiner.MVVM.View
             public static string second_file_path = "path";
             public static bool first_file_exists_is = false;
             public static bool second_file_exists_is = false;
-            public static List<string[]> CountryData = new List<string[]>();
+            public static List<string[]> CountryData = new();
             public static int FirstRC;
             public static int SecondRC;
             public static string OutputFileName = null;
@@ -62,7 +56,7 @@ namespace ModernCSVCombiner.MVVM.View
         {
             string path = "./data\\CountryData.csv";
             // System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance); // memo: Shift-JISを扱うためのおまじない
-            StreamReader readCsvObject = new StreamReader(path, Encoding.GetEncoding("Shift-JIS"));
+            StreamReader readCsvObject = new(path, Encoding.GetEncoding("Shift-JIS"));
             while (!readCsvObject.EndOfStream)
             {
                 var readCsvLine = readCsvObject.ReadLine();
@@ -148,8 +142,8 @@ namespace ModernCSVCombiner.MVVM.View
 
         private void First_TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)////数字のみ入力されるように(全角には非対応)
         {
-            var tmp = "";
             bool yes_parse;
+            string tmp;
             {
                 // 既存のテキストボックス文字列に、
                 // 今新規に一文字追加された時、その文字列が
@@ -167,8 +161,8 @@ namespace ModernCSVCombiner.MVVM.View
         }
         private void Second_TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)////数字のみ入力されるように(全角には非対応)
         {
-            var tmp = "";
             bool yes_parse;
+            string tmp;
             {
                 // 既存のテキストボックス文字列に、
                 // 今新規に一文字追加された時、その文字列が
@@ -198,13 +192,13 @@ namespace ModernCSVCombiner.MVVM.View
             int second_file_row_count = 0;
             int first_file_max_column = 0;
             int second_file_max_column = 0;
-            List<string[]> first_file_contents = new List<string[]>();
-            List<string[]> second_file_contents = new List<string[]>();
+            List<string[]> first_file_contents = new();
+            List<string[]> second_file_contents = new();
             String[] paths = {Global.first_file_path, Global.second_file_path};
             for(int times = 0; times < 2; times++)///二つのファイルの中身を二次元配列に格納
             {
                 //System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance); // memo: Shift-JISを扱うためのおまじない
-                StreamReader readCsvObject = new StreamReader(paths[times], Encoding.GetEncoding("Shift-JIS"));
+                StreamReader readCsvObject = new(paths[times], Encoding.GetEncoding("Shift-JIS"));
                 while (!readCsvObject.EndOfStream)
                 {
                     var readCsvLine = readCsvObject.ReadLine();
@@ -239,7 +233,7 @@ namespace ModernCSVCombiner.MVVM.View
 
             ///一致している同士を結合する。
             int matched_times = 0;
-            List<string[]> concatenated_contents = new List<string[]>();
+            List<string[]> concatenated_contents = new();
             for(int i = 0; i < first_file_row_count; i++)
             {
                 for(int j = 0; j < second_file_row_count; j++)
@@ -264,7 +258,7 @@ namespace ModernCSVCombiner.MVVM.View
             }
 
             ///新しいCSVとして出力する
-            List<string> output_contents = new List<string>();
+            List<string> output_contents = new();
             foreach (var line in concatenated_contents)
             {
                 output_contents.Add(string.Join(",", line));
@@ -319,7 +313,7 @@ namespace ModernCSVCombiner.MVVM.View
                 Global.OutputFileName = "Combined "+  Global.FirstFileName + " and " + Global.SecondFileName;
             }
             using FileStream fs = File.Create("Combined " + Global.FirstFileName + " and " + Global.SecondFileName + ".csv");
-            using StreamWriter sw = new StreamWriter(fs);
+            using StreamWriter sw = new(fs);
             foreach (var line in insert_list)
             {
                 sw.WriteLine(line);
@@ -329,7 +323,7 @@ namespace ModernCSVCombiner.MVVM.View
         private static List<string> CreateInsertList(String object_to_add,int specified_column){
             int adding_data = 0;
             int reference_data = 0;
-            List<string> insert_list = new List<string>();
+            List<string> insert_list = new();
 
             if (object_to_add == "CountryName")
             {
@@ -342,7 +336,7 @@ namespace ModernCSVCombiner.MVVM.View
                 reference_data = Constans.COUNTRY_NAME_COLUMN;
             }
             
-            List<string[]> Contents = new List<string[]>();
+            List<string[]> Contents = new();
             int raw_count = 0;
             int max_column = 0;
             
@@ -352,7 +346,7 @@ namespace ModernCSVCombiner.MVVM.View
                 ShowError();
                 return insert_list;
             }
-            using (StreamReader readCsvObject = new StreamReader(Global.first_file_path, Encoding.GetEncoding("Shift-JIS")))
+            using (StreamReader readCsvObject = new(Global.first_file_path, Encoding.GetEncoding("Shift-JIS")))
             {
                 while (!readCsvObject.EndOfStream)
                 {
