@@ -90,6 +90,8 @@ namespace ModernCSVCombiner.MVVM.View
                     {
                         String[] SplitFilePath = path.Split('\\');
                         String FileName = SplitFilePath[SplitFilePath.Length - 1];
+                        SplitFilePath = FileName.Split('.');
+                        FileName = SplitFilePath[0];
                         if (control.Name == "FirstFileDrop")
                         {
                             Global.first_file_path = path;
