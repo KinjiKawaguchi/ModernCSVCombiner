@@ -196,8 +196,8 @@ namespace ModernCSVCombiner.MVVM.View
             int second_file_max_column = 0;
             List<string[]> first_file_contents = new();
             List<string[]> second_file_contents = new();
-            String[] paths = {Global.first_file_path, Global.second_file_path};
-            for(int times = 0; times < 2; times++)///二つのファイルの中身を二次元配列に格納
+            String[] paths = { Global.first_file_path, Global.second_file_path };
+            for (int times = 0; times < 2; times++)///二つのファイルの中身を二次元配列に格納
             {
                 //System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance); // memo: Shift-JISを扱うためのおまじない
                 StreamReader readCsvObject = new(paths[times], Encoding.GetEncoding("Shift-JIS"));
@@ -236,9 +236,9 @@ namespace ModernCSVCombiner.MVVM.View
             ///一致している同士を結合する。
             int matched_times = 0;
             List<string[]> concatenated_contents = new();
-            for(int i = 0; i < first_file_row_count; i++)
+            for (int i = 0; i < first_file_row_count; i++)
             {
-                for(int j = 0; j < second_file_row_count; j++)
+                for (int j = 0; j < second_file_row_count; j++)
                 {
                     if (first_file_contents[i][first_specified_column - 1] == second_file_contents[j][second_specified_column - 1])
                     {
@@ -252,7 +252,7 @@ namespace ModernCSVCombiner.MVVM.View
                 }
             }
 
-            if(matched_times == 0)
+            if (matched_times == 0)
             {
                 MessageBox.Show("合致する行が見つかりませんでした。" +
                     "指定列を再度確認してください。");
@@ -273,7 +273,7 @@ namespace ModernCSVCombiner.MVVM.View
 
         private void Button_Ins_CN_Click(object sender, RoutedEventArgs e)
         {
-            if(Global.first_file_exists_is == false)
+            if (Global.first_file_exists_is == false)
             {
                 MessageBox.Show("上のファイルボックスにCSVファイルをドラッグアンドドロップしてください。");
                 return;
@@ -281,10 +281,10 @@ namespace ModernCSVCombiner.MVVM.View
 
             Insert_Column("CountryName", int.Parse(FirstFileReferenceColumn.Text));
         }
-        
+
         private void Button_Ins_CC_Click(object sender, RoutedEventArgs e)
         {
-            if(Global.first_file_exists_is == false)
+            if (Global.first_file_exists_is == false)
             {
                 MessageBox.Show("上のファイルボックスにCSVファイルをドラッグアンドドロップしてください。");
                 return;
@@ -292,13 +292,13 @@ namespace ModernCSVCombiner.MVVM.View
 
             Insert_Column("CountryCode", int.Parse(FirstFileReferenceColumn.Text));
         }
-        
+
         private static void Insert_Column(String object_to_add, int specified_column)
         {
-            if(specified_column < 1)
+            if (specified_column < 1)
             {
                 MessageBox.Show("指定列数は1以上を設定してください");
-                
+
                 return;
             }
 
@@ -312,7 +312,7 @@ namespace ModernCSVCombiner.MVVM.View
         {
             if (Global.OutputFileName == null)
             {
-                Global.OutputFileName = "Combined "+  Global.FirstFileName + " and " + Global.SecondFileName;
+                Global.OutputFileName = "Combined " + Global.FirstFileName + " and " + Global.SecondFileName;
             }
             using FileStream fs = File.Create("Combined " + Global.FirstFileName + " and " + Global.SecondFileName + ".csv");
             using StreamWriter sw = new(fs);
@@ -321,8 +321,9 @@ namespace ModernCSVCombiner.MVVM.View
                 sw.WriteLine(line);
             }
         }
-        
-        private static List<string> CreateInsertList(String object_to_add,int specified_column){
+
+        private static List<string> CreateInsertList(String object_to_add, int specified_column)
+        {
             int adding_data = 0;
             int reference_data = 0;
             List<string> insert_list = new();
@@ -332,18 +333,18 @@ namespace ModernCSVCombiner.MVVM.View
                 adding_data = Constans.COUNTRY_NAME_COLUMN;
                 reference_data = Constans.COUNTRY_CODE_COLUMN;
             }
-            else if(object_to_add == "CountryCode")
+            else if (object_to_add == "CountryCode")
             {
                 adding_data = Constans.COUNTRY_CODE_COLUMN;
                 reference_data = Constans.COUNTRY_NAME_COLUMN;
             }
-            
+
             List<string[]> Contents = new();
             int raw_count = 0;
             int max_column = 0;
-            
+
             //System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance); // memo: Shift-JISを扱うためのおまじない
-            if(Global.first_file_path == null)
+            if (Global.first_file_path == null)
             {
                 ShowError();
                 return insert_list;
@@ -359,19 +360,19 @@ namespace ModernCSVCombiner.MVVM.View
                         return insert_list;
                     }
                     int columns = CountChar(readCsvLine, ',');
-                    
+
                     if (max_column < columns)
                     {
                         max_column = columns;
                     }
-                    
+
                     readCsvLine += ",";
                     Contents.Add(readCsvLine.Split(','));
-                    
+
                     raw_count++;
                 }
             }
-            
+
             for (int i = 0; i < raw_count; i++)
             {
                 for (int j = 0; j < Constans.COUNTRY_NUM; j++)
@@ -380,19 +381,19 @@ namespace ModernCSVCombiner.MVVM.View
                     {
                         String CountryName = Global.CountryData[j][adding_data];
                         Contents[i][max_column + 1] = CountryName;
-                        
+
                         break;
                     }
                 }
             }
-            
+
             foreach (var line in Contents)
             {
                 insert_list.Add(string.Join(",", line));
             }
             return insert_list;
         }
-        
+
         private static int CountChar(string s, char c)
         {
             return s.Length - s.Replace(c.ToString(), "").Length;

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ModernCSVCombiner.Core;
+﻿using ModernCSVCombiner.Core;
 
 namespace ModernCSVCombiner.MVVM.ViewModel
 {
@@ -11,7 +6,7 @@ namespace ModernCSVCombiner.MVVM.ViewModel
     {
 
         public RelayCommand InputFilesViewCommand { get; set; }
-        
+
         public RelayCommand DictionaryViewCommand { get; set; }
 
         public InputFilesViewModel InputVM { get; set; }
@@ -39,7 +34,7 @@ namespace ModernCSVCombiner.MVVM.ViewModel
             InputFilesViewCommand = new RelayCommand(o =>
             {
                 CurrentView = InputVM;
-            }); 
+            });
 
             DictionaryViewCommand = new RelayCommand(o =>
             {

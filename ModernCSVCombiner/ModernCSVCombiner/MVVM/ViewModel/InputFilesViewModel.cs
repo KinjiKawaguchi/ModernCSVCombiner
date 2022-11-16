@@ -1,7 +1,4 @@
-﻿using System;
-using ModernCSVCombiner.Core;
-
-namespace ModernCSVCombiner.MVVM.ViewModel
+﻿namespace ModernCSVCombiner.MVVM.ViewModel
 {
     class InputFilesViewModel
     {
